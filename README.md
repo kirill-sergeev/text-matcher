@@ -24,25 +24,25 @@ After processing all chunks, the results are aggregated and printed.
 mvn clean package
 ```
 
-### Running the Program
+### Running the program
 
 ```bash
 java -jar target/text-matcher-1.0.jar --file <path> --search <terms> [OPTIONS]
 ```
 
-#### Required Options
+#### Required options
 
 - `--file <path>`: Path to the file to process.
 - `--search <terms>`: Comma-separated list of search terms.
 
-#### Optional Settings
+#### Optional settings
 
 - `--threads <number>`: Number of threads to use (default is the number of available processors). Valid range is 1 to 100.
 - `--chunk <number>`: Number of lines per chunk (default: 1000). Valid range is 1 to 1,000,000.
 - `--ignoreCase`: Enables case-insensitive search (default: false).
 - `--help`: Displays a help message with usage information.
 
-## Example Output
+## Example output
 
 An example output entry might look like:
 

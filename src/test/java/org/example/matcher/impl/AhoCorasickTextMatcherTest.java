@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class AhoCorasickTextMatcherTest {
+class AhoCorasickTextMatcherTest {
 
     static Stream<Arguments> provideEdgeCases() {
         return Stream.of(

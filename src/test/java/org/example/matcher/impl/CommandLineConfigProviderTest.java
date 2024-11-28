@@ -10,8 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
-public class CommandLineConfigProviderTest {
+class CommandLineConfigProviderTest {
 
     @Test
     @DisplayName("fromArgs should parse valid arguments successfully")
