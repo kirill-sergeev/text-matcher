@@ -1,7 +1,7 @@
 # Text Matcher
 
-[![codecov](https://codecov.io/gh/kirill-sergeev/text-matcher/branch/main/graph/badge.svg?token=S5XTCNhNDL)](https://codecov.io/gh/kirill-sergeev/text-matcher)
-![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=kirill-sergeev_text-matcher&metric=alert_status)
+[![codecov](https://codecov.io/gh/kirill-sergeev/text-matcher/branch/main/graph/badge.svg)](https://codecov.io/gh/kirill-sergeev/text-matcher)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=kirill-sergeev_text-matcher&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=kirill-sergeev_text-matcher)
 
 
 This Java program efficiently searches for multiple string patterns in large text files.
