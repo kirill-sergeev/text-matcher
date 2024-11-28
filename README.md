@@ -27,7 +27,7 @@ mvn clean package
 ### Running the Program
 
 ```bash
-java -jar target/matcher-1.0.jar --file <path> --search <terms> [OPTIONS]
+java -jar target/text-matcher-1.0.jar --file <path> --search <terms> [OPTIONS]
 ```
 
 #### Required Options
@@ -63,7 +63,7 @@ The project is structured into interfaces and implementation classes:
 - TextMatcher: Searches for patterns within text chunks.
 
 ```
-matcher/
+text-matcher/
 ├── src/main/java
 │   ├── org/example/matcher/
 │   │   ├── CommandLineApplication.java
