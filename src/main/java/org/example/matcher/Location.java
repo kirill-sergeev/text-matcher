@@ -8,8 +8,8 @@ import java.util.Objects;
  */
 public final class Location {
 
-    final int lineOffset;
-    final long charOffset;
+    private final int lineOffset;
+    private final long charOffset;
 
     public Location(int lineOffset, long charOffset) {
         this.lineOffset = lineOffset;
