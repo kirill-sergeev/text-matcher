@@ -2,10 +2,7 @@ package org.example.matcher.impl;
 
 import org.ahocorasick.trie.Emit;
 import org.ahocorasick.trie.Trie;
-import org.example.matcher.Location;
 import org.example.matcher.TextMatcher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,63 +23,29 @@ import java.util.Set;
  *   <li><code>z</code> is the number of pattern occurrences in the text.</li>
  * </ul>
  */
-public class AhoCorasickTextMatcher implements TextMatcher {
-
-    private static final Logger logger = LoggerFactory.getLogger(AhoCorasickTextMatcher.class);
+public class AhoCorasickTextMatcher extends AbstractTextMatcher {
 
     private final Trie trie;
-    private final int shortestKeywordLength;
 
     public AhoCorasickTextMatcher(Set<String> searchTerms, boolean caseInsensitive) {
-        if (searchTerms == null || searchTerms.isEmpty()) {
-            throw new IllegalArgumentException("Search terms must be specified.");
-        }
+        super(searchTerms, caseInsensitive);
 
-        int minLength = Integer.MAX_VALUE;
         Trie.TrieBuilder trieBuilder = Trie.builder();
-        for (String word : searchTerms) {
-            if (word == null || word.isBlank()) {
-                throw new IllegalArgumentException("Invalid search term provided: " + word);
-            }
-
-            minLength = Math.min(minLength, word.length());
-            if (caseInsensitive) {
-                trieBuilder.addKeywords(word.toLowerCase());
-                trieBuilder.ignoreCase();
-            } else {
-                trieBuilder.addKeywords(word);
-            }
+        trieBuilder.addKeywords(this.orderedSearchTerms);
+        trieBuilder.ignoreOverlaps();
+        if (caseInsensitive) {
+            trieBuilder.ignoreCase();
         }
-
         this.trie = trieBuilder.build();
-        this.shortestKeywordLength = minLength;
     }
 
     @Override
-    public Map<String, List<Location>> findMatches(List<String> lines, int initialLineOffset, long initialCharOffset) {
-        if (lines == null || initialLineOffset < 0 || initialCharOffset < 0) {
-            throw new IllegalArgumentException("List of lines must not be null, offsets must be positive.");
+    protected Map<String, List<Integer>> computeMatches(String lines) {
+        Map<String, List<Integer>> matches = new HashMap<>();
+        for (Emit match : trie.parseText(lines)) {
+            String matchedPattern = match.getKeyword();
+            matches.computeIfAbsent(matchedPattern, k -> new ArrayList<>()).add(match.getStart());
         }
-
-        logger.debug("Processing file chunk of size {} lines, line offset: {}, char offset: {}",
-                lines.size(), initialCharOffset, initialCharOffset);
-
-        Map<String, List<Location>> occurrences = new HashMap<>();
-        long currentCharOffset = initialCharOffset;
-
-        for (int lineIndex = 0; lineIndex < lines.size(); lineIndex++) {
-            String line = lines.get(lineIndex);
-
-            if (line.length() >= shortestKeywordLength) {
-                for (Emit match : trie.parseText(line)) {
-                    String matchedPattern = match.getKeyword();
-                    Location location = new Location(initialLineOffset + lineIndex, currentCharOffset + match.getStart());
-                    occurrences.computeIfAbsent(matchedPattern, k -> new ArrayList<>()).add(location);
-                }
-            }
-
-            currentCharOffset += line.length() + System.lineSeparator().length();
-        }
-        return occurrences;
+        return matches;
     }
 }
